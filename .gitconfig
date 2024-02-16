@@ -3,3 +3,5 @@
 [user]
 	email = nicolas.thierry.perso@gmail.com
 	name = Nicolas THIERRY
+[gpg]
+	format = ssh
