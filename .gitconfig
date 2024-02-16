@@ -3,5 +3,10 @@
 [user]
 	email = nicolas.thierry.perso@gmail.com
 	name = Nicolas THIERRY
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIyvVkH9kjGUtMzAX8Uy7gXvgWyfgskgNWbkA5TruiA4
 [gpg]
 	format = ssh
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign
+[commit]
+	gpgsign = true
