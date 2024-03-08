@@ -1,2 +1,6 @@
 .config/*
 !.config/nvim
+!.config/alacritty
+!.config/leftwm
+!.config/picom
+!.config/eww
