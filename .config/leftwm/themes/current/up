@@ -22,3 +22,9 @@ leftwm-command "LoadTheme $SCRIPTPATH/theme.ron"
 if [ -x "$(command -v feh)" ]; then
   feh --no-fehbg --bg-fill "$SCRIPTPATH"/background.jpg
 fi
+
+if [ -x "$(command -v eww)" ]; then
+	pkill eww
+	eww daemon
+	eww open bar
+fi
