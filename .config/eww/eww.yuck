@@ -1,0 +1,74 @@
+(defwindow bar
+	:monitor '["<primary>", 0]'
+	:windowtype "dock"
+	:stacking "fg"
+	:geometry (geometry :x "0%"
+						:y "0%"
+						:width "99.5%"
+						:height "2%"
+						:anchor "top center")
+	:reserve (struts :side "top" :distance "2%")
+(bar))
+
+(defwidget bar []
+	(centerbox :class "bar_class"
+		:orientation "h"
+		(right)
+		(center)
+		(left)))
+
+(defwidget right []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "start"
+		 :class "right_modules"
+(tags-w0)))
+
+(defwidget center []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "center"
+		 :class "center_modules"
+(clock_module)))
+
+(defwidget left []
+	(box :orientation "h" 
+		 :space-evenly false  
+         :halign "end"
+		 :class "left_modules"
+(sep)
+(bat)))
+
+(deflisten wm0-tags "leftwm-state")
+(defwidget tags-w0 []
+	(box :class "workspaces"
+		:orientation "h"
+		:space-evenly true
+		:halign "start"
+		:spacing 4
+		(for tag in {wm0-tags.workspaces[0].tags}
+			(button :class "${ tag.focused ? "ws-button-focus" : "ws-button-visible"}"			:onclick `leftwm-command "SendWorkspaceToTag 0 ${tag.index - 1}"` `•`)))
+)
+
+
+(defpoll clock_time :interval "5s" `date '+%H:%M %d/%m/%Y'`)
+(defwidget clock_module []
+	(box :class "module" 
+		:space-evenly "false" 
+		:orientation "h" 
+		:spacing "3" 
+		(label :text clock_time)))
+
+(defwidget sep []
+	(box :vexpand "false" :hexpand "false"
+		(label :class "sep" :text "|")))
+
+(defpoll battery-icon :interval "1s" "./scripts/battery icon")
+(defpoll battery-cappacity	:interval "1s" "./scripts/battery percent")
+(defwidget bat []
+		(box :class "bat_module" :vexpand "false" :hexpand "false" 
+			(label	:class "bat"		
+				:halign "end"		
+				:text "${battery-icon} ${battery-cappacity}%"
+				:tooltip "Battery: ${battery-cappacity}%")))
+
