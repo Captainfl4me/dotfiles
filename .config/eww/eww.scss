@@ -1,17 +1,33 @@
+// Theme Variables
+$primary-color: #1793d1;
+$primary-color-shade: #0b4968; 
+$danger-color: red;
+$dark-color: #0f0f17;
+$dark-shade: #757575;
+$white-color: #e3e3e3;
+
 * {
-  all: unset; //Unsets everything so you can style everything from scratch
+	all: unset; //Unsets everything so you can style everything from scratch
 }
 
 .bar_class {
-	background: #0f0f17;
-	color: #bfc9db;
-	padding: 0 4px;
+	background: $dark-color;
+	color: $white-color;
+	padding: 4px;
 }
 
-.batbar {
-	color: #afbea2;
-    background-color: #38384d;
-	border-radius: 10px;
+.sep {
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.danger {
+	color: $danger-color;
+}
+
+.icon {
+	margin: 0;
+	padding: 0;
 }
 
 .workspaces button {
@@ -21,17 +37,17 @@
 	transition: all .2s ease;
 
 	&:hover {
-		background-color: #0b4968;
+		background-color: $primary-color-shade;
 	}
 }
 .ws-button-focus {
-	color: #1793d1;
+	color: $primary-color;
 	font-weight: bold;
 }
 .ws-button-visible {
-	color: #e3e3e3;
+	color: $white-color;
 }
 
 .ws-button {
-	color: #757575;
+	color: $dark-shade;
 }

@@ -36,6 +36,9 @@
 		 :space-evenly false  
          :halign "end"
 		 :class "left_modules"
+(cpu)
+(sep)
+(mem)
 (sep)
 (bat)))
 
@@ -47,7 +50,7 @@
 		:halign "start"
 		:spacing 4
 		(for tag in {wm0-tags.workspaces[0].tags}
-			(button :class "${ tag.focused ? "ws-button-focus" : "ws-button-visible"}"			:onclick `leftwm-command "SendWorkspaceToTag 0 ${tag.index - 1}"` `•`)))
+			(button :class "${ tag.focused ? "ws-button-focus" : "ws-button-visible"}"			:onclick `leftwm-command "SendWorkspaceToTag 0 ${tag.index - 1}"` `${tag.index}`)))
 )
 
 
@@ -59,16 +62,31 @@
 		:spacing "3" 
 		(label :text clock_time)))
 
-(defwidget sep []
-	(box :vexpand "false" :hexpand "false"
-		(label :class "sep" :text "|")))
+(defwidget sep [] (box (label :class "sep" :text "|")))
+
+(defwidget cpu []
+		(box :class "cpu_module" 
+			:tooltip "CPU Usage: ${round(EWW_CPU.avg, 4)}%"
+			:space-evenly "false" 
+			(label :class "icon" :text "  ")
+			(label :class "cpu ${ EWW_CPU.avg >= 90 ? 'danger':''}"		
+				:text "${round(EWW_CPU.avg, 2)}%"
+				)))
+
+(defwidget mem []
+		(box :class "ram_module" 
+			:tooltip "RAM Usage: ${round(EWW_RAM.used_mem_perc, 4)}%"
+			:space-evenly "false" 
+			(label :class "icon" :text " ")
+			(label :class "mem ${ EWW_RAM.used_mem_perc >= 90 ? 'danger':''}"		
+				:text "${round(EWW_RAM.used_mem/1000000000, 2)}/${round(EWW_RAM.total_mem/1000000000, 2)}GB"
+				)))
 
 (defpoll battery-icon :interval "1s" "./scripts/battery icon")
-(defpoll battery-cappacity	:interval "1s" "./scripts/battery percent")
+(defpoll battery-capacity	:interval "1s" "./scripts/battery percent")
 (defwidget bat []
-		(box :class "bat_module" :vexpand "false" :hexpand "false" 
-			(label	:class "bat"		
-				:halign "end"		
-				:text "${battery-icon} ${battery-cappacity}%"
-				:tooltip "Battery: ${battery-cappacity}%")))
+		(box :class "bat_module"
+			(label	:class "bat ${ battery-capacity <= 20 ? 'danger':''}"		
+				:text "${battery-icon} ${battery-capacity}%"
+				:tooltip "Battery: ${battery-capacity}%")))
 
