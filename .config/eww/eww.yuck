@@ -50,7 +50,7 @@
 		:halign "start"
 		:spacing 4
 		(for tag in {wm0-tags.workspaces[0].tags}
-			(button :class "${ tag.focused ? "ws-button-focus" : "ws-button-visible"}"			:onclick `leftwm-command "SendWorkspaceToTag 0 ${tag.index - 1}"` `${tag.index}`)))
+			(button :class "${ tag.focused ? "ws-button-focus" : "ws-button-visible"}"			:onclick `leftwm-command "SendWorkspaceToTag 0 ${tag.index}"` `${tag.index+1}`)))
 )
 
 
