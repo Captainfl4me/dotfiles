@@ -4,3 +4,6 @@
 !.config/leftwm
 !.config/picom
 !.config/eww
+
+.ssh/*
+!.ssh/config
