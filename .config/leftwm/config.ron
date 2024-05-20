@@ -62,6 +62,8 @@
     disable_cursor_reposition_on_resize: false,
     keybind: [
         (command: Execute, value: "rofi -show run", modifier: ["modkey"], key: "p"),
+        (command: Execute, value: "lux -s 50", key: "XF86AudioLowerVolume"),
+        (command: Execute, value: "lux -a 50", key: "XF86AudioRaiseVolume"),
         (command: Execute, value: "alacritty", modifier: ["modkey", "Shift"], key: "Return"),
         (command: CloseWindow, value: "", modifier: ["modkey", "Shift"], key: "q"),
         (command: SoftReload, value: "", modifier: ["modkey", "Shift"], key: "r"),
