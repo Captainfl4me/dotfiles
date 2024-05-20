@@ -4,6 +4,7 @@
 !.config/leftwm
 !.config/picom
 !.config/eww
+!.config/rofi
 
 .ssh/*
 !.ssh/config
