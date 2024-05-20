@@ -1,10 +1,12 @@
 // Theme Variables
-$primary-color: #1793d1;
-$primary-color-shade: #0b4968; 
-$danger-color: red;
+$primary-color: #82aaff;
+$primary-color-shade: #82aaff; 
+$blue-color: #82aaff;
+$green-color: #c3e88d;
+$danger-color: #ff757f;
 $dark-color: #0f0f17;
-$dark-shade: #757575;
-$white-color: #e3e3e3;
+$dark-shade: #222436;
+$white-color: #c8d3f5;
 
 * {
 	all: unset; //Unsets everything so you can style everything from scratch
@@ -38,7 +40,7 @@ $white-color: #e3e3e3;
 	transition: all .2s ease;
 
 	&:hover {
-		background-color: $primary-color-shade;
+		background-color: $dark-shade;
 	}
 }
 .ws-button-focus {
@@ -51,4 +53,8 @@ $white-color: #e3e3e3;
 
 .ws-button {
 	color: $dark-shade;
+}
+
+.cpu_module {
+	color: $blue-color;
 }
