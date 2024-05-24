@@ -36,6 +36,8 @@
 		 :space-evenly false  
          :halign "end"
 		 :class "left_modules"
+(network)
+(sep)
 (cpu)
 (sep)
 (mem)
@@ -82,11 +84,17 @@
 				:text "${round(EWW_RAM.used_mem/1000000000, 2)}/${round(EWW_RAM.total_mem/1000000000, 2)}GB"
 				)))
 
-(defpoll battery-icon :interval "1s" "./scripts/battery icon")
-(defpoll battery-capacity	:interval "1s" "./scripts/battery percent")
+(defpoll battery-text :interval "1s" "./scripts/battery text")
+(defpoll battery-capacity :interval "1s" "./scripts/battery percent")
 (defwidget bat []
 		(box :class "bat_module"
 			(label	:class "bat ${ battery-capacity <= 20 ? 'danger':''}"		
-				:text "${battery-icon} ${battery-capacity}%"
+				:text "${battery-text}"
 				:tooltip "Battery: ${battery-capacity}%")))
 
+(defpoll wlan0-wifi-name :interval "5s" "wpa_cli status | grep -G '^ssid=' | cut -c6-")
+(defwidget network []
+		(box :class "network_module"
+			(label	:class "${ wlan0-wifi-name == '' ? 'danger':''}"		
+				:text "${wlan0-wifi-name != '' ? '󰖩 ' + wlan0-wifi-name : '󰖪 '}"
+				:tooltip "${wlan0-wifi-name != '' ? 'wlan0 ssid: ' + wlan0-wifi-name : 'No connection'}")))
