@@ -12,3 +12,5 @@
 	gpgsign = true
 [core]
 	editor = nvim
+[push]
+	autoSetupRemote = true
