@@ -15,6 +15,10 @@ elif [ -x "$(command -v compton)" ]; then
   compton &> /dev/null &
 fi
 
+if [ -x "$(command -v wired)" ]; then
+  wired &> /dev/null &
+fi
+
 # Set the theme.toml config
 leftwm-command "LoadTheme $SCRIPTPATH/theme.ron"
 
