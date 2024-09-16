@@ -65,7 +65,7 @@
     auto_derive_workspaces: true,
     disable_cursor_reposition_on_resize: false,
     keybind: [
-        (command: Execute, value: "rofi -show run", modifier: ["modkey"], key: "p"),
+        (command: Execute, value: "rofi -show drun -show-icons", modifier: ["modkey"], key: "p"),
         (command: Execute, value: "lux -s 50", key: "XF86MonBrightnessDown"),
         (command: Execute, value: "lux -a 50", key: "XF86MonBrightnessUp"),
         (command: Execute, value: "systemctl suspend", modifier: ["modkey"], key: "l"),
