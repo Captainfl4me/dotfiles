@@ -1,9 +1,9 @@
 .config/*
 !.config/nvim
 !.config/alacritty
-!.config/leftwm
+!.config/i3
 !.config/picom
-!.config/eww
+!.config/polybar
 !.config/rofi
 
 .ssh/*
