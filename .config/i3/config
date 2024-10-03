@@ -48,6 +48,8 @@ tiling_drag modifier titlebar
 
 # start a terminal
 bindsym $mod+Shift+Return exec alacritty
+# start a screenshot
+bindsym $mod+Shift+s exec flameshot gui
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -181,3 +183,5 @@ exec_always --no-startup-id light-locker
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id picom
 exec_always --no-startup-id wired
+exec_always --no-startup-id dwall -s lakeside
+exec_always --no-startup-id rclone mount OneDrive:Documents/ ~/docs --vfs-cache-mode full
