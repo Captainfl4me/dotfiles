@@ -100,4 +100,6 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+source '/usr/lib/node_modules/@hyperupcall/autoenv/activate.sh'
+
 fastfetch
