@@ -5,6 +5,8 @@
 !.config/picom
 !.config/polybar
 !.config/rofi
+!.config/paru
+!.config/flameshot
 
 .ssh/*
 !.ssh/config
