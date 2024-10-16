@@ -47,9 +47,9 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # start a terminal
-bindsym $mod+Shift+Return exec alacritty
+bindsym $mod+Shift+Return exec --no-startup-id alacritty
 # start a screenshot
-bindsym $mod+Shift+s exec flameshot gui
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui
 
 # kill focused window
 bindsym $mod+Shift+q kill
