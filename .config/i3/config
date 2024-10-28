@@ -185,3 +185,4 @@ exec_always --no-startup-id picom
 exec_always --no-startup-id wired
 exec_always --no-startup-id dwall -s lakeside
 exec_always --no-startup-id rclone mount OneDrive:Documents/ ~/docs --vfs-cache-mode full
+exec_always --no-startup-id i3-autolayout autolayout

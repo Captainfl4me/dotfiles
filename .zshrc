@@ -102,4 +102,5 @@ fi
 
 source '/usr/lib/node_modules/@hyperupcall/autoenv/activate.sh'
 
+export PATH=~/.cargo/bin:$PATH
 fastfetch
