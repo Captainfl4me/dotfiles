@@ -10,6 +10,8 @@ font pango:monospace 8
 gaps inner 8
 gaps outer 0
 for_window [class="^.*"] border pixel 3
+# Matlab Figure floating
+for_window [title="Figure .*"] floating enable
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -46,6 +48,8 @@ floating_modifier $mod
 # or left-clicking anywhere into the window while holding the floating modifier.
 tiling_drag modifier titlebar
 
+# start file manager
+bindsym $mod+Shift+e exec --no-startup-id dolphin
 # start a terminal
 bindsym $mod+Shift+Return exec --no-startup-id alacritty
 # start a screenshot
@@ -81,6 +85,18 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move focused window
+bindsym $mod+Ctrl+j move workspace to output left
+bindsym $mod+Ctrl+k move workspace to output down
+bindsym $mod+Ctrl+l move workspace to output up
+bindsym $mod+Ctrl+m move workspace to output right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Ctrl+Left move workspace to output left
+bindsym $mod+Ctrl+Down move workspace to output down
+bindsym $mod+Ctrl+Up move workspace to output up
+bindsym $mod+Ctrl+Right move workspace to output right
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -150,7 +166,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -186,3 +202,4 @@ exec_always --no-startup-id wired
 exec_always --no-startup-id dwall -s lakeside
 exec_always --no-startup-id rclone mount OneDrive:Documents/ ~/docs --vfs-cache-mode full
 exec_always --no-startup-id i3-autolayout autolayout
+exec_always --no-startup-id udiskie
