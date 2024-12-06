@@ -61,6 +61,7 @@ bindsym $mod+Shift+q kill
 # start rofi (a program launcher)
 bindsym $mod+d exec "rofi -show drun -show-icons"
 bindsym $mod+p exec ".config/polybar/powermenu.sh"
+bindsym $mod+n exec ".config/i3/rofi-wifi-menu.sh"
 
 # change focus
 bindsym $mod+j focus left
