@@ -38,8 +38,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-bindsym XF86MonBrightnessDown exec lux -s 10%
-bindsym XF86MonBrightnessUp exec lux -a 10%
+bindsym XF86MonBrightnessDown exec --no-startup-id lux -s 10%
+bindsym XF86MonBrightnessUp exec --no-startup-id lux -a 10%
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -204,3 +204,4 @@ exec_always --no-startup-id dwall -s lakeside
 exec_always --no-startup-id rclone mount OneDrive:Documents/ ~/docs --vfs-cache-mode full
 exec_always --no-startup-id i3-autolayout autolayout
 exec_always --no-startup-id udiskie
+exec_always --no-startup-id 1password --silent
