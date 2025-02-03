@@ -59,15 +59,16 @@ bindsym $mod+Shift+s exec --no-startup-id flameshot gui
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec "rofi -show drun -show-icons"
-bindsym $mod+p exec ".config/polybar/powermenu.sh"
-bindsym $mod+n exec ".config/i3/rofi-wifi-menu.sh"
+bindsym $mod+d exec --no-startup-id "~/.config/rofi/launcher/launcher.sh"
+bindsym $mod+p exec --no-startup-id "~/.config/rofi/powermenu/powermenu.sh"
+bindsym $mod+l exec --no-startup-id "light-locker-command -l"
+
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+m focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+m focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -202,6 +203,7 @@ exec_always --no-startup-id picom
 exec_always --no-startup-id wired
 exec_always --no-startup-id dwall -s lakeside
 exec_always --no-startup-id rclone mount OneDrive:Documents/ ~/docs --vfs-cache-mode full
-exec_always --no-startup-id i3-autolayout autolayout
+exec_always --no-startup-id i3-auto-layout
 exec_always --no-startup-id udiskie
+exec_always --no-startup-id nm-applet
 exec_always --no-startup-id 1password --silent
