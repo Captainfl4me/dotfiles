@@ -97,7 +97,8 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source '/usr/lib/node_modules/@hyperupcall/autoenv/activate.sh'
+source "/usr/lib/node_modules/@hyperupcall/autoenv/activate.sh"
+source "$HOME/dotfiles/local_profile.zsh"
 
-export PATH=~/.cargo/bin:$PATH
+export PATH="$HOME/.cargo/bin:$PATH"
 fastfetch

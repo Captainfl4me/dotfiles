@@ -11,3 +11,4 @@
 
 .ssh/*
 !.ssh/config
+local_profile.zsh
