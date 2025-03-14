@@ -74,7 +74,7 @@ case ${chosen} in
 		run_cmd --reboot
         ;;
     $lock)
-		xsecurelock
+		env XSECURELOCK_SAVER=saver_xscreensaver xsecurelock
         ;;
     $suspend)
 		run_cmd --suspend

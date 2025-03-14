@@ -47,7 +47,7 @@ bindsym $mod+Shift+q kill
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id "~/.config/rofi/launcher/launcher.sh"
 bindsym $mod+p exec --no-startup-id "~/.config/rofi/powermenu/powermenu.sh"
-bindsym $mod+l exec --no-startup-id "xsecurelock"
+bindsym $mod+l exec --no-startup-id "env XSECURELOCK_SAVER=saver_xscreensaver xsecurelock"
 
 
 # change focus
