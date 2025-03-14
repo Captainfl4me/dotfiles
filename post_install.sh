@@ -1,91 +1,116 @@
 #!/bin/bash
 
 ## TODO
-# Remove iwd if nm is working
-# add audio
-# add samsung galaxy custom driver
+# add grub setup
+# add lightdm greeter config (wallpaper)
+# add multilib
 # check if i3 shortcut are all installed
 
-echo "== POST INSTALL SCRIPT =="
+source ./install_scripts/00-utils.sh
+
+# Create Directory for Install Logs
+if [ ! -d Install-Logs ]; then
+    mkdir Install-Logs
+fi
+LOG="Install-Logs/Install-Scripts-$(date +%d-%H%M%S).log"
+
+clear
+
+echo "${GREEN}2025 Archlinux${RESET}" | tee -a "$LOG"
+printf "\n%.0s" {1..1}
+echo -e "\e[35m
+   ______            __        _          ________              
+  / ____/___  ____  / / ____  (_)___     / ____/ /___  ____ ___ 
+ / /   / __ \\/ __ \\/ __/ __ \\/ / __ \\   / /_  / / __ \/ __ \__ \\
+/ /___/ /_/ / /_/ / /_/ /_/ / / / / /  / __/ / / /_/ / / / / / /
+\\____/\\__,_/ .___/\\__/\\__,_/_/_/ /_/  /_/   /_/\\__,_/_/ /_/ /_/
+          /_/
+\e[0m"
+printf "\n%.0s" {1..1}
+
+echo "${GREEN}== INSTALL SCRIPT ==${RESET}" | tee -a "$LOG"
 
 # Save dotfile script dir
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd)
-echo "running from : ${SCRIPT_DIR}"
+echo "${INFO} running from ${SCRIPT_DIR}" | tee -a "$LOG"
 
-# Start with pacman upgrade
-sudo pacman -Syu --noconfirm
-
-# Check if PARU (AUR helper exist, if not install)
-if ! command -v paru 2>&1 > /dev/null
-then
-	if ! command -v rustup 2>&1 > /dev/null
-	then
-		sudo pacman -S --noconfirm rustup
-		rustup default stable
-	fi
-	echo "Paru not found, installing..."
-	mkdir -p ~/aur
-	sudo pacman -S --needed --noconfirm base-devel git
-	cd ~/aur
-	git clone https://aur.archlinux.org/paru.git
-	cd paru
-	makepkg -si
-	cd ${SCRIPT_DIR}
+if [[ $EUID -eq 0 ]]; then
+    echo "${ERROR}  This script should ${WARNING}NOT${RESET} be executed as root!! Exiting......." | tee -a "$LOG"
+    printf "\n%.0s" {1..2} 
+    exit 1
 fi
 
-# Install and exec stow
-sudo pacman -S --needed --noconfirm stow
+# Do Pacman full upgrade
+echo "${NOTE} pacman upgrading..." | tee -a "$LOG"
+sudo pacman -Syu --noconfirm
+echo "	${OK} pacman upgrade successful" | tee -a "$LOG"
+
+source ./install_scripts/01-base.sh
+
 stow .
 
+source ./install_scripts/02-audio.sh
+
+echo "Run bluetooth support script ? [Y/n]"
+read answer
+
+if [ "$answer" != "${answer#[Yy]}" ] || [ "$answer" = "" ]; then
+	source ./install_scripts/03-bluetooth.sh
+fi
+
+source ./install_scripts/10-fonts.sh
+source ./install_scripts/20-terminal.sh
+source ./install_scripts/21-neovim.sh
+
+source ./install_scripts/30-sddm.sh
+echo -e "Choose Window System: \n\t1)X11 / i3 (default)\n\t2)Wayland / Hyprland"
+read answer
+if [ "$answer" != "${answer#[1]}" ] || [ "$answer" = "" ]; then
+	source ./install_scripts/31-x11.sh
+	source ./install_scripts/32-i3.sh
+# elif if [ "$answer" != "${answer#[2]}" ]; then
+fi
+
+SPECIFIC_SCRIPT_PATH="./install_scripts/$(</etc/hostname).sh"
+if [ -f $SPECIFIC_SCRIPT_PATH ]; then
+	source $SPECIFIC_SCRIPT_PATH
+fi
+
+echo -e "\n${OK} POST Installation and services setup complete!" 2>&1 | tee -a "$LOG"
+
+exit 0
+
+
+
+
+
+
+
+
+
 # Install all Pacman package needed
-sudo pacman -S --needed --noconfirm xorg-server xorg-xrandr xclip picom feh cronie i3-wm polybar lightdm lightdm-slick-greeter light-locker accountsservice rofi alacritty flameshot noto-fonts-emoji numlockx curl wget zsh zsh-completions openssh dnsmasq
+# lightdm: lightdm lightdm-slick-greeter light-locker accountsservice || lightdm-settings
+sudo pacman -S --needed --noconfirm numlockx   power-profiles-daemon libsecret gnome-keyring python-setuptools fuse3 gnome-backgrounds
 
 # Install all Paru package needed
-paru -S --needed --noconfirm ttf-twemoji-color ttf-mononoki-nerd lux wired oh-my-zsh-git
+paru -S --needed --noconfirm lux mkinitcpio-numlock hyperfluent-grub-theme-arch
 sudo lux # Need to be run once as root
 
 # Install apps
-sudo pacman -S --needed --noconfirm rclone discord firefox wireshark-qt docker docker-compose nodejs npm python fastfetch python-pynvim ripgrep luarocks lazygit
-paru -S --needed --noconfirm 1password
-sudo npm install -g tree-sitter-cli neovim
+sudo pacman -S --needed --noconfirm rclone discord firefox wireshark-qt docker docker-compose docker-buildx github-cli htop putty thunderbird  gdb 
+paru -S --needed --noconfirm 1password gf2-git 
+sudo npm install -g tree-sitter-cli neovim '@hyperupcall/autoenv'
 
 # Configure NetworkManager
-sudo sh -c 'echo "[main]" > /etc/NetworkManager/conf.d/dns.conf'
-sudo sh -c 'echo "dns=dnsmasq" >> /etc/NetworkManager/conf.d/dns.conf'
 
-# Install dynamic-wallpaper
-if ! command -v dwall 2>&1 > /dev/null
-then
-	echo "Dynamic-wallpaper not found, installing..."
-	mkdir -p ~/aur
-	cd ~/aur
-	git clone https://github.com/adi1090x/dynamic-wallpaper.git
-	cd dynamic-wallpaper
-	chmod +x install.sh
-	./install.sh
-	cd ${SCRIPT_DIR}
-fi
-
-# Install Samsung custom drivers
-
-# Numlock default on
-touch ~/.xinitrc
-NUMLOCK_CMD="numlockx &"
-if grep -q "${NUMLOCK_CMD}" ~/.xinitrc; then
-	echo "Numlock already activated"
-else
-	if [ -s ~/.xinitrc ]; then
-		echo "Inserting Numlock in ~/.xinitrc"
-		sed -i "1i${NUMLOCK_CMD}" ~/.xinitrc
-	else
-		echo "Copying Numlock in ~/.xinitrc"
-		echo ${NUMLOCK_CMD} > ~/.xinitrc
-	fi
-fi
+# Conf initramfs
+RAMFS_HOOKS_LINE=$(cat /etc/mkinitcpio.conf | grep -i -n '^HOOKS=' | grep -oP '\K[0-9]*(?=:)')
+echo "Updating /etc/mkinitcpio.conf: line ${RAMFS_HOOKS_LINE}"
+sudo sed -i "${RAMFS_HOOKS_LINE}s/.*/HOOKS=\(base udev autodetect microcode modconf kms keyboard keymap consolefont numlock block filesystems resume fsck\)/" /etc/mkinitcpio.conf
 
 # Change lightDM greeter
-SEAT_LINE=$(cat /etc/lightdm/lightdm.conf | grep -i -n "^\[Seat:\*\]" | grep -o "[0-9]*")
-GREETER_LINE_RELATIVE=$(tail --lines="+${SEAT_LINE}" /etc/lightdm/lightdm.conf | grep -i -n "greeter-session=" | grep -o "[0-9]*")
+SEAT_LINE=$(cat /etc/lightdm/lightdm.conf | grep -i -n "^\[Seat:\*\]" | grep -oP '\K[0-9]*(?=:)')
+GREETER_LINE_RELATIVE=$(tail --lines="+${SEAT_LINE}" /etc/lightdm/lightdm.conf | grep -i -n "greeter-session=" | grep -oP '\K[0-9]*(?=:)')
 GREETER_LINE_ABS=$((10#${SEAT_LINE} + 10#${GREETER_LINE_RELATIVE} - 10#1))
 echo "Updating /etc/lightdm/lightdm.conf: line ${GREETER_LINE_ABS}"
 if [ ! -z ${GREETER_LINE_ABS} ]; then
@@ -94,7 +119,7 @@ else
 	echo "WARNING: GREETER_LINE_ABS empty!"
 fi
 # Numlock for lightDM
-GREETER_SCRIPT_LINE_RELATIVE=$(tail --lines="+${SEAT_LINE}" /etc/lightdm/lightdm.conf | grep -i -n "greeter-setup-script=" | grep -o "[0-9]*")
+GREETER_SCRIPT_LINE_RELATIVE=$(tail --lines="+${SEAT_LINE}" /etc/lightdm/lightdm.conf | grep -i -n "greeter-setup-script=" | grep -oP '\K[0-9]*(?=:)')
 GREETER_SCRIPT_LINE_ABS=$((10#${SEAT_LINE} + 10#${GREETER_SCRIPT_LINE_RELATIVE} - 10#1))
 echo "Updating /etc/lightdm/lightdm.conf: line ${GREETER_SCRIPT_LINE_ABS}"
 if [ ! -z ${GREETER_SCRIPT_LINE_ABS} ]; then
@@ -103,29 +128,35 @@ else
 	echo "WARNING: GREETER_SCRIPT_LINE_ABS empty!"
 fi
 
-# Add X11 touchpad config
-sudo sh -c 'echo -e "Section \"InputClass\"" > /etc/X11/xorg.conf.d/30-touchpad.conf'
-sudo sh -c 'echo -e "\tIdentifier \"devname\"\n\tDriver \"libinput\"\n\tMatchIsTouchpad \"on\"\n" >> /etc/X11/xorg.conf.d/30-touchpad.conf'
-sudo sh -c 'echo -e "\tOption \"Tapping\" \"on\"\n\tOption \"ClickMethod\" \"clickfinger\"\n\tOption \"NaturalScrolling\" \"true\"\nEndSection\n" >> /etc/X11/xorg.conf.d/30-touchpad.conf'
+# GRUB Setup
+sudo mkdir -p /boot/grub/themes/
+sudo cp -r /usr/share/grub/themes/hyperfluent-grub-theme-arch/ /boot/grub/themes/
+echo "Writing GRUB config"
+GRUB_DEFAULT_LINE=$(cat /etc/default/grub | grep -i -n "^GRUB_DEFAULT=" | grep -oP '\K[0-9]*(?=:)')
+echo "GRUB_DEFAULT at ${GRUB_DEFAULT_LINE}"
+if [ ! -z ${GRUB_DEFAULT_LINE} ]; then
+	sudo sed -i "${GRUB_DEFAULT_LINE}s/.*/GRUB_DEFAULT=saved/" /etc/default/grub
+fi
 
-# Update X11 keymap
-echo "Update X11 keymap"
-sudo localectl set-x11-keymap fr
+GRUB_SAVEDEFAULT_LINE=$(cat /etc/default/grub | grep -i -n "GRUB_SAVEDEFAULT=" | grep -oP '\K[0-9]*(?=:)')
+echo "GRUB_SAVEDEFAULT at ${GRUB_SAVEDEFAULT_LINE}"
+if [ ! -z ${GRUB_SAVEDEFAULT_LINE} ]; then
+	sudo sed -i "${GRUB_SAVEDEFAULT_LINE}s/.*/GRUB_SAVEDEFAULT=true/" /etc/default/grub
+fi
+
+GRUB_THEME_LINE=$(cat /etc/default/grub | grep -i -n "GRUB_THEME=" | grep -oP '\K[0-9]*(?=:)')
+echo "GRUB_THEME at ${GRUB_THEME_LINE}"
+if [ ! -z ${GRUB_THEME_LINE} ]; then
+	sudo sed -i "${GRUB_THEME_LINE}s/.*/GRUB_THEME=\/boot\/grub\/themes\/hyperfluent-grub-theme-arch\/theme\.txt/" /etc/default/grub
+fi
+# sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 # Groups management
 echo "Groups management"
 sudo usermod -aG wireshark $USER
 sudo usermod -aG docker $USER
+sudo usermod -aG uucp $USER 
 
-# Setup subuid and subgid
-echo "Setup subuid and subgid"
-sudo sh -c 'echo "nicoth:100000:65536" > /etc/subuid'
-sudo sh -c 'echo "nicoth:100000:65536" > /etc/subgid'
-
-# Enable jobs
-echo "Enable jobs"
-sudo systemctl enable --now NetworkManager
-sudo systemctl enable --now cronie
 sudo systemctl enable --now docker.socket
 
 # Make sure lightdm is enable and running

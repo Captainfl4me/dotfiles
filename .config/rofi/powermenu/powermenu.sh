@@ -74,7 +74,7 @@ case ${chosen} in
 		run_cmd --reboot
         ;;
     $lock)
-		light-locker-command -l
+		xsecurelock
         ;;
     $suspend)
 		run_cmd --suspend
