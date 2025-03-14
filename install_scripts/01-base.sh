@@ -14,6 +14,7 @@ install_package linux-headers
 install_package curl
 install_package wget
 install_package openssh
+install_package udiskie
 rustup default stable
 
 # Check if PARU (AUR helper exist, if not install)

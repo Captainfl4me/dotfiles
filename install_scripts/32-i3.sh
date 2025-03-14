@@ -12,7 +12,6 @@ install_package flameshot
 install_package dolphin
 install_package network-manager-applet 
 
-install_package_paru i3-auto-layout
 install_package_paru wired
 
 
