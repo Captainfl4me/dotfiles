@@ -2,7 +2,7 @@
 .gitignore
 README.md
 post_install.sh
-./Install-Logs/
-./install_scripts/
-./fonts/
-./sddm_theme/
+Install-Logs
+install_scripts
+fonts
+sddm_theme
