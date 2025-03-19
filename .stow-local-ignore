@@ -5,3 +5,4 @@ post_install.sh
 ./Install-Logs/
 ./install_scripts/
 ./fonts/
+./sddm_theme/

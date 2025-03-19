@@ -37,7 +37,7 @@ function install_package_paru {
 	else
 		echo "${NOTE} Install (AUR) $1.........." | tee -a "$LOG"
 
-		if sudo paru -S --noconfirm $1; then
+		if paru -S --noconfirm $1; then
 			echo "👌 ${OK} $1 has been installed successfully." | tee -a "$LOG"
 		else
 			echo "${ERROR} $1 not found nor cannot be installed." | tee -a "$LOG"
