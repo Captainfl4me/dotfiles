@@ -47,7 +47,7 @@ bindsym $mod+Shift+q kill
 # start rofi (a program launcher)
 bindsym $mod+d exec --no-startup-id "~/.config/rofi/launcher/launcher.sh"
 bindsym $mod+p exec --no-startup-id "~/.config/rofi/powermenu/powermenu.sh"
-bindsym $mod+l exec --no-startup-id "env XSECURELOCK_SAVER=saver_xscreensaver xsecurelock"
+bindsym $mod+l exec --no-startup-id "~/.config/i3/lock.sh"
 
 
 # change focus
@@ -192,3 +192,4 @@ exec_always --no-startup-id rclone mount OneDrivePerso:Documents/ ~/docs --vfs-c
 exec_always --no-startup-id udiskie --smart-tray
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id 1password --silent
+exec_always --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock.sh

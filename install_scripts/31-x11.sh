@@ -1,13 +1,11 @@
 #!/bin/bash
 
-echo -e "\n${INFO} Running 04-x11" | tee -a "$LOG"
+echo -e "\n${INFO} Running 31-x11" | tee -a "$LOG"
 
 # X11 support
 install_package xorg-server   
 install_package xorg-xrandr
 install_package xclip
-install_package xsecurelock
-install_package xscreensaver
 
 install_package picom
 install_package arandr

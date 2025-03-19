@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo -e "\n${INFO} Running 05-i3wm" | tee -a "$LOG"
+echo -e "\n${INFO} Running 32-i3wm" | tee -a "$LOG"
 
 # Bluetooth support
 install_package i3-wm
@@ -8,6 +8,9 @@ install_package polybar
 install_package feh
 install_package rofi
 install_package flameshot
+install_package xsecurelock
+install_package mplayer
+install_package xss-lock
 
 install_package dolphin
 install_package network-manager-applet 
