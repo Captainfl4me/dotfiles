@@ -6,6 +6,7 @@ echo -e "\n${INFO} Running 31-x11" | tee -a "$LOG"
 install_package xorg-server   
 install_package xorg-xrandr
 install_package xclip
+install_package clipmenu
 
 install_package picom
 install_package arandr
