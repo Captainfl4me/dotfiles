@@ -40,6 +40,9 @@ bindsym $mod+Shift+e exec --no-startup-id dolphin
 bindsym $mod+Shift+Return exec --no-startup-id alacritty
 # start a screenshot
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+# Start clipmenu (clipboard)
+bindsym $mod+v exec --no-startup-id CM_LAUNCHER=rofi clipmenu
+
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -87,10 +90,10 @@ bindsym $mod+Ctrl+Up move workspace to output up
 bindsym $mod+Ctrl+Right move workspace to output right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+# bindsym $mod+h split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+# bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -187,8 +190,9 @@ exec_always --no-startup-id light-locker
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec_always --no-startup-id picom
 exec_always --no-startup-id wired
+exec_always --no-startup-id clipmenud
 exec_always --no-startup-id dwall -s lakeside
-exec_always --no-startup-id rclone mount OneDrivePerso:Documents/ ~/docs --vfs-cache-mode full
+exec_always --no-startup-id rclone mount OneDrivePerso: ~/onedrive --vfs-cache-mode full
 exec_always --no-startup-id udiskie --smart-tray
 exec_always --no-startup-id nm-applet
 exec_always --no-startup-id 1password --silent

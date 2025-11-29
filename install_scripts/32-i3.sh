@@ -35,6 +35,9 @@ else
 	cd ${SCRIPT_DIR}
 fi
 
+echo "${NOTE} Update Symlink for ROFI config"
+ln -sf rofi-i3 .config/rofi
+
 echo -e "${NOTE} Writing ${YELLOW}dwall${RESET} crontab..."
 echo -e "0 * * * * env PATH=$PATH DISPLAY=$DISPLAY DESKTOP_SESSION=$DESKTOP_SESSION DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS /usr/bin/dwall -s lakeside" | crontab -
 
