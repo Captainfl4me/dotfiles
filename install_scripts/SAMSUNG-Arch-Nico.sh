@@ -15,7 +15,4 @@ else
 	cd ${SCRIPT_DIR}
 fi
 
-echo -e "${NOTE} Writing ${YELLOW}necessary-verbs${RESET} crontab..."
-echo -e "0 * * * * env PATH=$PATH DISPLAY=$DISPLAY DESKTOP_SESSION=$DESKTOP_SESSION DBUS_SESSION_BUS_ADDRESS=$DBUS_SESSION_BUS_ADDRESS /usr/bin/zsh /home/nicoth/aur/galaxy-book2-pro-linux/sound/necessary-verbs.sh" | sudo crontab -
-
 echo -e "\n${OK} Specific Installation and services setup complete!" 2>&1 | tee -a "$LOG"
