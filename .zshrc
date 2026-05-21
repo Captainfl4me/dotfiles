@@ -100,5 +100,9 @@ fi
 source "/usr/lib/node_modules/@hyperupcall/autoenv/activate.sh"
 source "$HOME/dotfiles/local_profile.zsh"
 
+export OPENCODE_ENABLE_EXA=1
 export PATH="$HOME/.cargo/bin:$PATH"
 fastfetch
+
+export PATH="/home/nicoth/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/nicoth/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
