@@ -68,7 +68,8 @@ read answer
 if [ "$answer" != "${answer#[1]}" ] || [ "$answer" = "" ]; then
 	source ./install_scripts/31-x11.sh
 	source ./install_scripts/32-i3.sh
-# elif if [ "$answer" != "${answer#[2]}" ]; then
+elif [ "$answer" != "${answer#[2]}" ]; then
+	source ./install_scripts/33-hyprland.sh
 fi
 
 SPECIFIC_SCRIPT_PATH="./install_scripts/$(</etc/hostname).sh"
